@@ -53,4 +53,6 @@ EXPOSE 5601
 
 CMD ["/tmp/start.sh"]
 
+RUN chmod +x /tmp/start.sh
+
 RUN yum clean -y all
