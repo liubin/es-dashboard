@@ -1,6 +1,6 @@
-# fluentd-dashboard
+# es-dashboard
 
-fluentd dashboard manage logs collected from fluentd-agent
+es dashboard manage logs collected from fluentd-agent(or others).
 
 Bundled with:
 - CentOS 7
@@ -13,10 +13,10 @@ Bundled with:
 
 ```
 # build image
-sudo docker build -t liubin/fluentd-dashboard .
+sudo docker build -t liubin/es-dashboard .
 
 # start a container
-sudo docker run -p 9200:9200 -p 5601:5601 -it liubin/fluentd-dashboard
+sudo docker run -p 9200:9200 -p 9300:9300 -p 5601:5601 liubin/es-dashboard
 ```
 
 **It's recommend that use it with [fluentd-agent](https://github.com/liubin/fluentd-agent), which will collect log from nginx using fluentd.**
@@ -33,6 +33,18 @@ sudo docker run -e ELASTIC_HOST=172.17.0.92 -e ELASTIC_PORT=9200 -v /var/log:/va
 ```
 
 And then open `http://localhost:5601/` in your browser.
+
+
+Or you can run elastaicsearch and kibana in two containers:
+
+```
+sudo docker run -p 9200:9200 -p 9300:9300 liubin/es-dashboard --name es /tmp/start.sh es
+
+# or (kibana only)
+
+sudo docker run -p 5601:5601 -e ELASTIC_URl=192.168.33.121:9200 --name kibana liubin/es-dashboard /tmp/start.sh kibana
+
+```
 
 # TODOs
 
